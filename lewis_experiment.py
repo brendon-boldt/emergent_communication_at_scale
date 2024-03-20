@@ -15,6 +15,7 @@
 """Emergent Communication jaxline experiment."""
 
 from typing import List, Tuple
+import json
 
 from absl import flags
 from absl import logging
@@ -444,6 +445,11 @@ class LewisExperiment(jaxline_ckpt.ExperimentWithCheckpointing):
 
     # Fuses and formats scalars.
     scalars = {**game_scalars, **message_scalars}
+
+    metadata_path = f"{self._config.checkpointing.checkpoint_dir}/metadata.json"
+    with open(metadata_path, "w") as fo:
+        d = {k: v.item() for k, v in scalars.items()}
+        json.dump(d, fo, indent=4)
 
     scalars = jax.device_get(scalars)
 
