@@ -28,6 +28,7 @@ def get_config(sweep='debug'):
   get_value = lambda x, c=config: c.get_oneway_ref(x)
 
   config.experiment = 'lewis'
+  config.skip_train = False
   config.training_steps = int(2e5)
 
   # Define global storage folder (ckpt, logs etc.)

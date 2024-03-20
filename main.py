@@ -34,7 +34,8 @@ def main(argv):
 
   if config.experiment == 'lewis':
     # Training
-    platform.main(lewis_experiment.LewisExperiment, argv)
+    if not config.skip_train:
+      platform.main(lewis_experiment.LewisExperiment, argv)
 
     # Evaluation
     eval_utils.evaluate_final(config,
