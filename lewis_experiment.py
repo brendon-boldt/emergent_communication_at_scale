@@ -531,6 +531,12 @@ class LewisExperiment(jaxline_ckpt.ExperimentWithCheckpointing):
     # stacks messages into a single batch.
     messages = [np.concatenate(m, axis=0) for m in messages]
 
+    messages_path = f"{self._config.checkpointing.checkpoint_dir}/corpus.jsonl"
+    with open(messages_path, "w") as fo:
+        for msg in messages[0]:
+            fo.write(str(msg.tolist()).replace(" ", ""))
+            fo.write("\n")
+
     return avg_scalars, messages
 
   def _eval_all_listeners(
